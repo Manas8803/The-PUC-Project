@@ -1,0 +1,40 @@
+{
+	"id": "any_id",
+	"name": "The PUC Project",
+	"short_name": "PUC Project",
+	"description": "Ensuring Clean Rides, One Vehicle at a Time",
+	"icons": [
+		{
+			"src": "./logo512.webp",
+			"sizes": "72",
+			"type": "image/webp"
+		},
+		{
+			"src": "./logo512.webp",
+			"sizes": "192",
+			"type": "image/webp"
+		},
+		{
+			"src": "./logo512.webp",
+			"sizes": "384",
+			"type": "image/webp"
+		},
+		{
+			"src": "./logo512.webp",
+			"sizes": "512",
+			"type": "image/webp"
+		},
+		{
+			"src": "./spec.svg",
+			"sizes": "512",
+			"type": "image/svg+xml",
+			"purpose": "maskable"
+		}
+	],
+	"theme_color": "#FFFFFF",
+	"background_color": "#FFFFFF",
+	"start_url": "/",
+	"scope": ".",
+	"display": "standalone",
+	"orientation": "portrait"
+}

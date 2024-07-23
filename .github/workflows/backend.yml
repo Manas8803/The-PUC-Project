@@ -1,0 +1,119 @@
+name: Backend CI/CD Pipeline
+
+on:
+  push:
+    paths:
+      - 'Backend/**'
+    branches: ["main"]
+  pull_request:
+    paths:
+      - 'Backend/**'
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21.3"
+      - name: Build
+        working-directory: ./Backend
+        run: make build
+      - name: Upload Auth Service Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: auth-service
+          path: ./Backend/auth-service/bootstrap
+
+      - name: Upload OCR Service Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: ocr-service
+          path: ./Backend/ocr-service/bootstrap
+
+      - name: Upload Reg_Expiration_Job Service Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: reg_expiration_job-service
+          path: ./Backend/reg_expiration_job-service/bootstrap
+
+      - name: Upload Reg_Renewal_Reminder Service Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: reg_renewal_reminder-service
+          path: ./Backend/reg_renewal_reminder-service/bootstrap
+
+      - name: Upload VRC Service Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: vrc-service
+          path: ./Backend/vrc-service/bootstrap
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      CDK_DEFAULT_REGION: ${{ secrets.CDK_DEFAULT_REGION }}
+      CDK_DEFAULT_ACCOUNT: ${{ secrets.CDK_DEFAULT_ACCOUNT }}
+      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+      USER_TABLE_ARN: ${{ secrets.USER_TABLE_ARN }}
+      JWT_LIFETIME: ${{ secrets.JWT_LIFETIME }}
+      EMAIL: ${{ secrets.EMAIL }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      RELEASE_MODE: ${{ secrets.RELEASE_MODE }}
+      ADMIN: ${{ secrets.ADMIN }}
+      REPORT_WEBSOCKET_URL: ${{ secrets.REPORT_WEBSOCKET_URL }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+      - name: Install AWS CDK
+        run: |
+          npm install -g aws-cdk
+
+      - name: Download Auth Service Build
+        uses: actions/download-artifact@v3
+        with:
+          name: auth-service
+          path: ./Backend/auth-service
+
+      - name: Download OCR Service Build
+        uses: actions/download-artifact@v3
+        with:
+          name: ocr-service
+          path: ./Backend/ocr-service
+
+      - name: Download Reg_Expiration_Job Service Build
+        uses: actions/download-artifact@v3
+        with:
+          name: reg_expiration_job-service
+          path: ./Backend/reg_expiration_job-service
+
+      - name: Download Reg_Renewal_Reminder Service Build
+        uses: actions/download-artifact@v3
+        with:
+          name: reg_renewal_reminder-service
+          path: ./Backend/reg_renewal_reminder-service
+
+      - name: Download VRC Service Build
+        uses: actions/download-artifact@v3
+        with:
+          name: vrc-service
+          path: ./Backend/vrc-service
+
+      - name: CDK Deploy
+        working-directory: Backend/deploy-scripts
+        run: cdk deploy --require-approval never

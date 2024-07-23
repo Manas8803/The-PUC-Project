@@ -1,0 +1,17 @@
+go 1.21.3
+
+use ./deploy-scripts
+
+use ./ocr-service
+
+use ./reg_renewal_reminder-service
+
+use ./vrc-service
+
+use ./reg_expiration_job-service
+
+use ./puc_expiry_warner-service
+
+use ./auth-service
+
+use ./fetch_vehicle-service
