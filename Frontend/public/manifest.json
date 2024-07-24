@@ -5,7 +5,7 @@
 	"description": "Ensuring Clean Rides, One Vehicle at a Time",
 	"icons": [
 		{
-			"src": "./icons/logo72.webp",
+			"src": "./icons/logo.webp",
 			"sizes": "72x72",
 			"type": "image/webp"
 		},
