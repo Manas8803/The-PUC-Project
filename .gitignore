@@ -1,0 +1,43 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# go.sum should be committed
+!go.sum
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+# Environment
+.env
+
+# Service realted assets
+ocr-service/pkg/test-images
+ocr-service/pkg/lib/image/image_test.go
+ocr-service/pkg/results/
+ocr-service/pkg/lib/image/test-images 
+ocr-service/pkg/lib/image/tmp
+
+# Zip files
+deploy-scripts/zip/connect.zip
+deploy-scripts/zip/disconnect.zip
+deploy-scripts/zip/report-authority.zip
+
+# Build files
+ocr-service/bootstrap
+vrc-service/bootstrap
+reg_renewal_reminder-service/bootstrap
+
+.DS_Store
+
+!*.js

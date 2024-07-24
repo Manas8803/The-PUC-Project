@@ -24,9 +24,7 @@ export const useReportsData = () => {
 						console.log("A MESSAGE IS RECEIVED: ", JSON.parse(event.data));
 						setReportsData((prevData) => [...prevData, JSON.parse(event.data)]);
 					});
-					socket.addEventListener("error", (error) => {
-						// console.error("WebSocket error:", error.currentTarget);
-					});
+					socket.addEventListener("error", (error) => {});
 				}
 			} catch (error) {}
 		};
