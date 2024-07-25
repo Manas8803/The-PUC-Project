@@ -19,6 +19,7 @@ var validate = validator.New()
 func Login(r *gin.Context) {
 
 	var req models.Login
+	log.Println(r.Request.Body)
 
 	//* Checking for invalid json format
 	if err := r.BindJSON(&req); err != nil {

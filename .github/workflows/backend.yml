@@ -3,11 +3,11 @@ name: Backend CI/CD Pipeline
 on:
   push:
     paths:
-      - 'Backend/**'
+      - "Backend/**"
     branches: ["main"]
   pull_request:
     paths:
-      - 'Backend/**'
+      - "Backend/**"
     branches: ["main"]
 
 jobs:
@@ -55,18 +55,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      CDK_DEFAULT_REGION: ${{ secrets.CDK_DEFAULT_REGION }}
-      CDK_DEFAULT_ACCOUNT: ${{ secrets.CDK_DEFAULT_ACCOUNT }}
-      JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-      USER_TABLE_ARN: ${{ secrets.USER_TABLE_ARN }}
-      JWT_LIFETIME: ${{ secrets.JWT_LIFETIME }}
-      EMAIL: ${{ secrets.EMAIL }}
-      PASSWORD: ${{ secrets.PASSWORD }}
-      RELEASE_MODE: ${{ secrets.RELEASE_MODE }}
-      ADMIN: ${{ secrets.ADMIN }}
-      REPORT_WEBSOCKET_URL: ${{ secrets.REPORT_WEBSOCKET_URL }}
-
     steps:
       - uses: actions/checkout@v3
       - name: Configure AWS Credentials
@@ -116,4 +104,14 @@ jobs:
 
       - name: CDK Deploy
         working-directory: Backend/deploy-scripts
+        env:
+          CDK_DEFAULT_REGION: ${{ secrets.CDK_DEFAULT_REGION }}
+          CDK_DEFAULT_ACCOUNT: ${{ secrets.CDK_DEFAULT_ACCOUNT }}
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET }}
+          JWT_LIFETIME: ${{ secrets.JWT_LIFETIME }}
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          RELEASE_MODE: ${{ secrets.RELEASE_MODE }}
+          ADMIN: ${{ secrets.ADMIN }}
+          REPORT_WEBSOCKET_URL: ${{ secrets.REPORT_WEBSOCKET_URL }}
         run: cdk deploy --require-approval never

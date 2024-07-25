@@ -196,7 +196,7 @@ func NewPucDetectionStack(scope constructs.Construct, id string, props *PucDetec
 	})
 
 	//^ Auth API Gateway
-	awsapigateway.NewLambdaRestApi(stack, jsii.String("Puc_Detection_Auth"), &awsapigateway.LambdaRestApiProps{
+	awsapigateway.NewLambdaRestApi(stack, jsii.String("Puc-Detection-Auth"), &awsapigateway.LambdaRestApiProps{
 		Handler: auth_handler,
 		DefaultCorsPreflightOptions: &awsapigateway.CorsOptions{
 			AllowOrigins: awsapigateway.Cors_ALL_ORIGINS(),
