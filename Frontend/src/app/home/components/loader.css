@@ -1,0 +1,41 @@
+@-webkit-keyframes spin {
+	to {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	to {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+/**
+  * Split
+  *
+  * @author jh3y
+*/
+.split:after,
+.split:before {
+	border-radius: 100%;
+	content: "";
+	position: absolute;
+}
+
+.split:after {
+	-webkit-animation: spin 1s infinite linear;
+	animation: spin 1s infinite linear;
+	border: 10px solid #7cc558;
+	border-left-color: transparent;
+	border-right-color: transparent;
+	height: 100px;
+	width: 100px;
+}
+
+.split:before {
+	background: #7cc558;
+	height: 30px;
+	width: 30px;
+}

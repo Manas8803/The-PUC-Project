@@ -1,47 +1,63 @@
 export interface CardData {
-	pucStatus: string;
-	vehicleType: string;
-	validUpto: string;
-	registrationNo: string;
-	vehicleModel: string;
-	vehicleDescription: string;
-	contact: string;
-	pucValidUpto: string;
-	office_name : string;
+	last_check_date: {
+		year: number;
+		month: number;
+		day: number;
+	};
+	mobile: number;
+	model: string;
+	office_name: string;
+	owner_name: string;
+	puc_status: boolean;
+	puc_upto: {
+		year: number;
+		month: number;
+		day: number;
+	};
+	reg_no: string;
+	reg_upto: {
+		year: number;
+		month: number;
+		day: number;
+	};
+	vehicle_class_desc: string;
+	vehicle_type: string;
 }
-
-export const cardData: CardData[] = [
-	{
-		office_name:"Mumbai",
-		pucStatus: "Valid",
-		vehicleType: "Car",
-		validUpto: "31 Nov 2023",
-		registrationNo: "ILKPK14703",
-		vehicleModel: "Super Splendor",
-		vehicleDescription: "Bike",
-		contact: "+91 9741053920",
-		pucValidUpto: "31 Feb 2025",
-	},
-	{
-		office_name:"Mumbai",
-		pucStatus: "Valid",
-		vehicleType: "Truck",
-		validUpto: "31 Dec 2024",
-		registrationNo: "ABC123",
-		vehicleModel: "Volvo",
-		vehicleDescription: "Heavy Vehicle",
-		contact: "+91 9876543210",
-		pucValidUpto: "31 Mar 2025",
-	},
-	{
-		office_name:"Mumbai",
-		pucStatus: "Expired",
-		vehicleType: "Motorcycle",
-		validUpto: "31 Jan 2023",
-		registrationNo: "XYZ789",
-		vehicleModel: "Honda",
-		vehicleDescription: "Two-wheeler",
-		contact: "+91 9998887776",
-		pucValidUpto: "31 Jan 2022",
-	},
-];
+// export const cardData: CardData[] = [
+// 	{
+// 		owner_name: "Rajesh",
+// 		office_name: "Mumbai",
+// 		pucStatus: "Valid",
+// 		vehicleType: "Car",
+// 		validUpto: "31 Nov 2023",
+// 		registrationNo: "ILKPK14703",
+// 		vehicleModel: "Super Splendor",
+// 		vehicleDescription: "Bike",
+// 		contact: "+91 9741053920",
+// 		pucValidUpto: "31 Feb 2025",
+// 	},
+// 	{
+// 		owner_name: "Ramesh",
+// 		office_name: "Mumbai",
+// 		pucStatus: "Valid",
+// 		vehicleType: "Truck",
+// 		validUpto: "31 Dec 2024",
+// 		registrationNo: "ABC123",
+// 		vehicleModel: "Volvo",
+// 		vehicleDescription: "Heavy Vehicle",
+// 		contact: "+91 9876543210",
+// 		pucValidUpto: "31 Mar 2025",
+// 	},
+// 	{
+// 		owner_name: "Suresh",
+// 		office_name: "Mumbai",
+// 		pucStatus: "Expired",
+// 		vehicleType: "Motorcycle",
+// 		validUpto: "31 Jan 2023",
+// 		registrationNo: "XYZ789",
+// 		vehicleModel: "Honda",
+// 		vehicleDescription: "Two-wheeler",
+// 		contact: "+91 9998887776",
+// 		pucValidUpto: "31 Jan 2022",
+// 	},
+// ];

@@ -48,8 +48,7 @@ func main() {
 		log.Println("NOT ABLE TO FIND .env FILE..\nContinuing...")
 	}
 	mode := os.Getenv("RELEASE_MODE")
-	log.Println(mode)
-	if mode == "testing"{
+	if mode=="testing"{
 		TestRun()
 		return
 	}

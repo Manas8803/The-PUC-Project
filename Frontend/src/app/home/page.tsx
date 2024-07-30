@@ -2,7 +2,7 @@
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import MainLayout from "@/components/ui/MainLayout";
 import { useState } from "react";
-import Reports from "./components/puc_alert_section";
+import Reports from "./components/reports";
 import SearchBar from "./components/search_bar";
 
 export default function Home() {

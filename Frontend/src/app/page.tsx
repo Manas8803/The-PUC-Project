@@ -3,7 +3,7 @@ import { useAuth } from "@/hooks/index";
 import Link from "next/link";
 
 export default function Home() {
-	const { logout } = useAuth(); 
+	const { logout } = useAuth();
 
 	return (
 		<main className="pl-10">
@@ -11,6 +11,9 @@ export default function Home() {
 			<br />
 			<br />
 			<Link href={"/auth/login"}>Login</Link>
+			<br />
+			<br />
+			<Link href={"/home"}>Home</Link>
 			<br />
 			<br />
 			<button onClick={logout}>Logout</button>

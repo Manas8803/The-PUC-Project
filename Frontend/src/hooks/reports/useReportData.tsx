@@ -1,15 +1,41 @@
-"use client";
-import { CardData, cardData } from "@/lib/data";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { CardData } from "@/lib/data";
+
+const baseUrl = process.env.NEXT_PUBLIC_FETCH_VEHICLES_URL;
 
 export const useReportsData = () => {
-	const [reportsData, setReportsData] = useState<CardData[]>(cardData);
-	const isBrowser = typeof window !== "undefined";
+	const [reportsData, setReportsData] = useState<CardData[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
 	useEffect(() => {
-		if (!isBrowser) {
-			return;
-		}
 		let socket: WebSocket | null = null;
+
+		const fetchData = async () => {
+			const office_name = localStorage.getItem("officeName");
+			setIsLoading(true);
+			try {
+				await new Promise((resolve) => setTimeout(resolve, 10000));
+
+				const response = await fetch(`${baseUrl}`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ office_name: office_name }),
+				});
+				if (response.ok) {
+					const data = await response.json();
+					setReportsData(data.vehicles);
+				} else {
+					setError("Failed to fetch data");
+				}
+			} catch (error) {
+				setError("Error fetching data: " + (error as Error).message);
+			} finally {
+				setIsLoading(false);
+			}
+		};
 
 		const connectWebSocket = () => {
 			try {
@@ -29,6 +55,7 @@ export const useReportsData = () => {
 			} catch (error) {}
 		};
 
+		fetchData();
 		connectWebSocket();
 
 		return () => {
@@ -36,7 +63,7 @@ export const useReportsData = () => {
 				socket.close();
 			}
 		};
-	}, [isBrowser]);
+	}, []);
 
-	return { reportsData };
+	return { reportsData, isLoading, error };
 };
