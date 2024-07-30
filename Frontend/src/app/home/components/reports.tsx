@@ -4,7 +4,8 @@ import { CardData } from "@/lib/data";
 import { LazyMotion, domAnimation } from "framer-motion";
 import AlertCard from "./alert-card";
 import "./loader.css";
-
+import Image from "next/image";
+import no_reports from "@/public/no-reports-1.webp";
 interface ReportsProps {
 	searchQuery: string;
 }
@@ -26,7 +27,8 @@ export default function Reports({ searchQuery }: ReportsProps) {
 
 	if (!reportsData || reportsData.length === 0) {
 		return (
-			<div className="flex justify-center items-center h-[80vh] text-2xl text-side">
+			<div className="flex flex-col gap-2 justify-center items-center h-[70vh] text-2xl text-side">
+				<Image width={200} height={200} src={no_reports} alt="home-icon" />
 				No reports available...
 			</div>
 		);
