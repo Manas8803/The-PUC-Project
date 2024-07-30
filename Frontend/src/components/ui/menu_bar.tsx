@@ -24,6 +24,7 @@ export default function MenuBar() {
 						height={imgSize}
 						src={currentRoute === "/home" ? home_icon_active : home_icon}
 						alt="home-icon"
+						loading="lazy"
 					/>
 				</Link>
 				<p className="m-0 p-0 text-center">Home</p>
@@ -39,6 +40,7 @@ export default function MenuBar() {
 								: dashboard_icon
 						}
 						alt="dashboard-icon"
+						loading="lazy"
 					/>
 				</Link>
 				<p className="m-0 p-0 text-center">Dashboard</p>
@@ -50,6 +52,7 @@ export default function MenuBar() {
 						height={imgSize}
 						src={currentRoute === "/reports" ? report_icon_active : report_icon}
 						alt="report-icon"
+						loading="lazy"
 					/>
 				</Link>
 				<p className="m-0 p-0 text-center">Reports</p>

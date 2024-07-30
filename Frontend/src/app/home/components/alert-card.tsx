@@ -2,7 +2,6 @@ import { CardData } from "@/lib/data";
 import dropdown_icon from "@/public/home/alert-card/dropdown-icon.webp";
 import indicator_green from "@/public/home/alert-card/indicator-green.webp";
 import indicator_red from "@/public/home/alert-card/indicator-red.webp";
-import { log } from "console";
 import { m } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
@@ -43,6 +42,7 @@ export default function AlertCard({
 						width={10}
 						height={10}
 						alt="indicator"
+						loading="lazy"
 					/>
 					<p>{puc_status ? "PUC is valid" : "Seems the PUC is outdated!"}</p>
 				</div>
@@ -52,7 +52,13 @@ export default function AlertCard({
 					}`}
 					onClick={() => setIsOpen(!isOpen)}
 				>
-					<Image src={dropdown_icon} alt="dropdown" width={20} height={20} />
+					<Image
+						src={dropdown_icon}
+						alt="dropdown"
+						width={20}
+						height={20}
+						loading="lazy"
+					/>
 				</div>
 			</div>
 			<h1 className="text-xl font-bold pl-2">{reg_no}</h1>
@@ -74,6 +80,12 @@ export default function AlertCard({
 					</p>
 					<p>
 						Vehicle Type: &nbsp;<strong>{vehicle_type}</strong>
+					</p>
+					<p>
+						Owner Name: &nbsp;<strong>{owner_name}</strong>
+					</p>
+					<p>
+						RTO registered office: &nbsp;<strong>{office_name}</strong>
 					</p>
 					<p>
 						Contact: &nbsp;<strong>{mobile}</strong>

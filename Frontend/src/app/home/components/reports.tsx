@@ -1,17 +1,19 @@
-import React from "react";
 import { useReportsData } from "@/hooks/reports/useReportData";
 import { CardData } from "@/lib/data";
+import no_reports from "@/public/no-reports-1.webp";
 import { LazyMotion, domAnimation } from "framer-motion";
+import Image from "next/image";
 import AlertCard from "./alert-card";
 import "./loader.css";
-import Image from "next/image";
-import no_reports from "@/public/no-reports-1.webp";
+import useWindowSize from "@/hooks/window_size/useWindowSize";
 interface ReportsProps {
 	searchQuery: string;
 }
 
 export default function Reports({ searchQuery }: ReportsProps) {
 	const { reportsData, isLoading, error } = useReportsData();
+	const { width } = useWindowSize();
+	const imgSize = width ? (1 / 2.2) * width : 200;
 
 	if (isLoading) {
 		return (
@@ -28,7 +30,13 @@ export default function Reports({ searchQuery }: ReportsProps) {
 	if (!reportsData || reportsData.length === 0) {
 		return (
 			<div className="flex flex-col gap-2 justify-center items-center h-[70vh] text-2xl text-side">
-				<Image width={200} height={200} src={no_reports} alt="home-icon" />
+				<Image
+					width={imgSize}
+					height={imgSize}
+					src={no_reports}
+					alt="no-reports-graphic"
+					loading="lazy"
+				/>
 				No reports available...
 			</div>
 		);

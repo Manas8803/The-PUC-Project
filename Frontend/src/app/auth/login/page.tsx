@@ -56,6 +56,7 @@ export default function Login() {
 							height={90}
 							alt="The PUC Project logo"
 							className="mx-auto"
+							loading="lazy"
 						/>
 					</div>
 					<form onSubmit={handleSubmit}>

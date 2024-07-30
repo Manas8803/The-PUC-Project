@@ -26,6 +26,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
 						src={search_icon}
 						width={50}
 						alt="search-icon.svg"
+						loading="lazy"
 					/>
 				</div>
 			</div>
