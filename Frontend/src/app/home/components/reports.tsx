@@ -27,7 +27,7 @@ export default function Reports({ searchQuery }: ReportsProps) {
 
 	if (!reportsData || reportsData.length === 0) {
 		return (
-			<div className="flex flex-col gap-2 bg-white justify-center items-center h-[70vh] text-2xl text-side">
+			<div className="flex flex-col gap-2 justify-center items-center h-[70vh] text-2xl text-side">
 				<Image width={200} height={200} src={no_reports} alt="home-icon" />
 				No reports available...
 			</div>
