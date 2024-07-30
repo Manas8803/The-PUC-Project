@@ -15,8 +15,6 @@ export const useReportsData = () => {
 			const office_name = localStorage.getItem("officeName");
 			setIsLoading(true);
 			try {
-				await new Promise((resolve) => setTimeout(resolve, 10000));
-
 				const response = await fetch(`${baseUrl}`, {
 					method: "POST",
 					headers: {
