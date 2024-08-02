@@ -13,12 +13,14 @@ export default function Home() {
 	};
 	return (
 		<ProtectedRoute>
-			<MainLayout>
-				<>
-					<SearchBar onSearch={handleSearch} />
-					<Reports searchQuery={searchQuery} />
-				</>
-			</MainLayout>
+			<div className="bg-bgrnd min-h-[100vh]">
+				<MainLayout>
+					<>
+						<SearchBar onSearch={handleSearch} />
+						<Reports searchQuery={searchQuery} />
+					</>
+				</MainLayout>
+			</div>
 		</ProtectedRoute>
 	);
 }

@@ -65,7 +65,7 @@ export default function Reports({ searchQuery }: ReportsProps) {
 
 	return (
 		<LazyMotion features={domAnimation}>
-			<section className="h-full pb-5">
+			<section className="min-h-[80vh pb-5">
 				{filteredData.map((report: Partial<CardData>, index: number) => (
 					<AlertCard
 						key={index}
