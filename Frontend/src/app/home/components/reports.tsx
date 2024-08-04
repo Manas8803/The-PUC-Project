@@ -1,11 +1,11 @@
 import { useReportsData } from "@/hooks/reports/useReportData";
+import useWindowSize from "@/hooks/window_size/useWindowSize";
 import { CardData } from "@/lib/data";
 import no_reports from "@/public/no-reports-1.webp";
 import { LazyMotion, domAnimation } from "framer-motion";
 import Image from "next/image";
 import AlertCard from "./alert-card";
 import "./loader.css";
-import useWindowSize from "@/hooks/window_size/useWindowSize";
 interface ReportsProps {
 	searchQuery: string;
 }
@@ -65,7 +65,7 @@ export default function Reports({ searchQuery }: ReportsProps) {
 
 	return (
 		<LazyMotion features={domAnimation}>
-			<section className="min-h-[80vh pb-5">
+			<section className="flex flex-col pb-[25%]">
 				{filteredData.map((report: Partial<CardData>, index: number) => (
 					<AlertCard
 						key={index}

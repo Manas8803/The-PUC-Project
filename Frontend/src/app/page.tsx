@@ -6,7 +6,7 @@ export default function Home() {
 	const { logout } = useAuth();
 
 	return (
-		<main className="pl-10 min-h-[100%]">
+		<main className="pl-10 bg-bgrnd">
 			Landing Page
 			<br />
 			<br />

@@ -12,7 +12,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
 	};
 
 	return (
-		<div className="p-2 flex items-center justify-center mt-[10%]">
+		<div className="p-2 flex items-center justify-center mt-[10%] mb-0">
 			<div className={"relative min-w-[83.33%]"}>
 				<input
 					className="bg-white py-3 px-5 w-full focus:outline-none focus:border-[0.2px] focus:border-black border border-gray-300 rounded-2xl shadow-lg"

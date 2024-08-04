@@ -11,14 +11,19 @@ export default function Home() {
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
 	};
+
 	return (
 		<ProtectedRoute>
-			<div className="bg-bgrnd min-h-[100vh]">
+			<div className="h-screen">
 				<MainLayout>
-					<>
-						<SearchBar onSearch={handleSearch} />
-						<Reports searchQuery={searchQuery} />
-					</>
+					<div className="flex flex-col h-full">
+						<div className="fixed top-0 left-0 right-0 z-10 bg-bgrnd">
+							<SearchBar onSearch={handleSearch} />
+						</div>
+						<div className="mt-32 flex-grow overflow-y-auto">
+							<Reports searchQuery={searchQuery} />
+						</div>
+					</div>
 				</MainLayout>
 			</div>
 		</ProtectedRoute>
