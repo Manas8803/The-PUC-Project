@@ -42,48 +42,48 @@ exports.handler = async function (event, context) {
 
 	//* Add an entry to the table with single connection across office_name
 	try {
+		// First, retrieve the existing connectionIds (if any) for the given office_name
+		const existingData = await ddb
+			.get({
+				TableName: process.env.RTO_OFFICE_TABLE_ARN,
+				Key: { office_name: rtoOfficeName },
+			})
+			.promise();
 
-    // First, retrieve the existing connectionIds (if any) for the given office_name
-    const existingData = await ddb
-      .get({
-        TableName: process.env.RTO_OFFICE_TABLE_ARN,
-        Key: { office_name: rtoOfficeName },
-      })
-      .promise();
+		let connectionIds = existingData.Item?.connection_id || [];
+		if (connectionIds.length >= 3) {
+			return {
+				statusCode: 400,
+				body: JSON.stringify({
+					error: "Maximum number of connections reached",
+				}),
+			};
+		}
 
-    let connectionIds = existingData.Item?.connection_id || [];
-    if (connectionIds.length >= 3) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({
-          error: "Maximum number of connections reached",
-        }),
-      };
-    }
+		// Add the new connectionId to the array
+		connectionIds.push(event.requestContext.connectionId);
 
-    // Add the new connectionId to the array
-    connectionIds.push(event.requestContext.connectionId);
+		// Update or create the item with the new connectionIds array
+		await ddb
+			.put({
+				TableName: process.env.RTO_OFFICE_TABLE_ARN,
+				Item: {
+					office_name: rtoOfficeName,
+					connection_id: connectionIds,
+				},
+			})
+			.promise();
 
-    // Update or create the item with the new connectionIds array
-    await ddb
-      .put({
-        TableName: process.env.RTO_OFFICE_TABLE_ARN,
-        Item: {
-          office_name: rtoOfficeName,
-          connection_id: connectionIds,
-        },
-      })
-      .promise();
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: "Connected successfully" }),
-    };
-  } catch (err) {
-    console.error("Error connecting:", err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Error connecting" }),
-    };
-  }
+		return {
+			statusCode: 200,
+			body: JSON.stringify({ message: "Connected successfully" }),
+		};
+	} catch (err) {
+		console.error("Error connecting:", err);
+		return {
+			statusCode: 500,
+			body: JSON.stringify({ error: "Error connecting" }),
+		};
+	}
 };
+

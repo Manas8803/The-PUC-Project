@@ -45,7 +45,7 @@ export const useReportsData = () => {
 						console.log("WebSocket connection established");
 					});
 					socket.addEventListener("message", (event) => {
-						console.log("A MESSAGE IS RECEIVED: ", JSON.parse(event.data));
+						// console.log("A MESSAGE IS RECEIVED: ", JSON.parse(event.data));
 						setReportsData((prevData) => [...prevData, JSON.parse(event.data)]);
 					});
 					socket.addEventListener("error", (error) => {});
@@ -65,3 +65,14 @@ export const useReportsData = () => {
 
 	return { reportsData, isLoading, error };
 };
+
+// Connect - Save connection id.
+// Disconnect - Delete connection id.
+// Any number custom routes
+
+// TODO: Beacon DB
+// id -> String - Discount name
+
+// TODO: User DB
+// PK - Socket ID - Email
+// user_id -> Connection id - email
