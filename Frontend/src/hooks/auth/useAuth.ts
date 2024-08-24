@@ -57,7 +57,7 @@ export default function useAuth() {
 	function logout() {
 		localStorage.removeItem("token");
 		localStorage.removeItem("officeName");
-		router.push("/auth/login");
+		router.push("/");
 	}
 
 	return { isLoading, login, logout };
