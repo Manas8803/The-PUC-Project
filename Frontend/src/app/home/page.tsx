@@ -22,17 +22,24 @@ export default function Home() {
 		<ProtectedRoute>
 			<MainLayout>
 				<>
-					<div className="fixed top-14 left-0 right-0 bg-bgrnd">
-						<div className="fixed flex top-5 left-72 right-0 bg-bgrnd text-main gap-2">
-							<LogOut />
-							<button className="font-regular" onClick={handleLogout}>
-								Sign out
-							</button>
-						</div>
-						<SearchBar onSearch={handleSearch} />
-					</div>
-					<div className="mt-32 flex-grow overflow-y-auto">
-						<Reports searchQuery={searchQuery} />
+					<div className="flex flex-col min-h-screen bg-bgrnd">
+						<header className="sticky top-0 z-10 bg-bgrnd">
+							<div className="container mx-auto px-4 py-4 flex justify-end">
+								<button
+									className="flex items-center gap-2 text-main"
+									onClick={handleLogout}
+								>
+									<LogOut />
+									<span className="font-regular">Sign out</span>
+								</button>
+							</div>
+							<div className="container mx-auto px-4 pb-4">
+								<SearchBar onSearch={handleSearch} />
+							</div>
+						</header>
+						<main className="flex-grow overflow-y-auto container mx-auto px-4 py-8">
+							<Reports searchQuery={searchQuery} />
+						</main>
 					</div>
 				</>
 			</MainLayout>

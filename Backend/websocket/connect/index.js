@@ -7,8 +7,8 @@ exports.handler = async function (event, context) {
 		: null;
 	if (!rtoOfficeName) {
 		return {
-			statusCode: 400,
-			body: JSON.stringify({ message: "Please provide an office name." }),
+			statusCode: 200,
+			body: JSON.stringify({ message: "Connected Successfully" }),
 		};
 	}
 
@@ -86,4 +86,3 @@ exports.handler = async function (event, context) {
 		};
 	}
 };
-
