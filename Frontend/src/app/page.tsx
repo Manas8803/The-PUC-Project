@@ -6,7 +6,7 @@ import placeholder from "@/public/Placeholder.png";
 import individuals from "@/public/icons/individuals.svg";
 import authorities from "@/public/icons/authorities.svg";
 
-export default function Home() {
+export default function Landing() {
 	return (
 		<main className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden m-2 p-2">
 			<div className="p-4">
