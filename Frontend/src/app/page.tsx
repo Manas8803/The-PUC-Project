@@ -13,6 +13,10 @@ import {
 import placeholder from "@/public/Placeholder.png";
 import individuals from "@/public/icons/individuals.svg";
 import authorities from "@/public/icons/authorities.svg";
+import car from "@/public/icons/car.svg";
+import validation from "@/public/icons/validation.svg";
+import monitoring from "@/public/icons/monitoring.svg";
+import alerts from "@/public/icons/alert.svg";
 import Tile from "./components/Tile";
 
 export default function Landing() {
@@ -42,22 +46,38 @@ export default function Landing() {
 				<h3 className="font-regular text-center mb-6">What we do?</h3>
 				<div className="grid grid-cols-2 gap-2 mb-6">
 					<Tile
-						icon={<Car size={20} />}
+						icon={<Image src={car} width={20} height={20} alt="car-icon" />}
 						title="Detection"
 						subtitle="Detect vehicle number"
 					/>
 					<Tile
-						icon={<FileCheck size={20} />}
+						icon={
+							<Image
+								src={validation}
+								width={20}
+								height={20}
+								alt="validaiton-icon"
+							/>
+						}
 						title="Validation"
 						subtitle="PUC Certificates"
 					/>
 					<Tile
-						icon={<Activity size={20} />}
+						icon={
+							<Image
+								src={monitoring}
+								width={20}
+								height={20}
+								alt="monitoring-icon"
+							/>
+						}
 						title="Monitoring"
 						subtitle="Pollution monitor"
 					/>
 					<Tile
-						icon={<Bell size={20} />}
+						icon={
+							<Image src={alerts} width={20} height={20} alt="alerts-icon" />
+						}
 						title="Alerts"
 						subtitle="Real time alerts"
 					/>
