@@ -15,8 +15,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 1. Clone the repository:
    ```
-   git clone [repository-url]
-   cd [repository-name]
+   git clone https://github.com/Manas8803/The-PUC-Project.git
+   cd The-PUC-Project/Frontend
    ```
 
 2. Install dependencies:
