@@ -1,22 +1,12 @@
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import {
-	Camera,
-	Car,
-	AlertTriangle,
-	Wifi,
-	FileCheck,
-	Activity,
-	Bell,
-} from "lucide-react";
 import placeholder from "@/public/Placeholder.png";
-import individuals from "@/public/icons/individuals.svg";
+import alerts from "@/public/icons/alert.svg";
 import authorities from "@/public/icons/authorities.svg";
 import car from "@/public/icons/car.svg";
-import validation from "@/public/icons/validation.svg";
+import individuals from "@/public/icons/individuals.svg";
 import monitoring from "@/public/icons/monitoring.svg";
-import alerts from "@/public/icons/alert.svg";
+import validation from "@/public/icons/validation.svg";
+import Image from "next/image";
+import Link from "next/link";
 import Tile from "./components/Tile";
 
 export default function Landing() {
