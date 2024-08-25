@@ -40,8 +40,8 @@ Our backend consists of several microservices:
 
 1. Clone this repository:
    ```
-   git clone [repository-url]
-   cd [repository-name]
+   git clone https://github.com/Manas8803/The-PUC-Project.git
+   cd The-PUC-Project/Backend
    ```
 
 2. Configure AWS credentials:
