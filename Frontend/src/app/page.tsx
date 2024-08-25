@@ -1,14 +1,23 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Camera, Car, AlertTriangle, Wifi } from "lucide-react";
+import {
+	Camera,
+	Car,
+	AlertTriangle,
+	Wifi,
+	FileCheck,
+	Activity,
+	Bell,
+} from "lucide-react";
 import placeholder from "@/public/Placeholder.png";
 import individuals from "@/public/icons/individuals.svg";
 import authorities from "@/public/icons/authorities.svg";
+import Tile from "./components/Tile";
 
 export default function Landing() {
 	return (
-		<main className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden m-2 p-2">
+		<main className="max-w-md mx-auto bg-bgrnd shadow-lg rounded-lg overflow-hidden p-2">
 			<div className="p-4">
 				<div className="flex justify-end items-center mb-4">
 					<Link href="/home">
@@ -30,48 +39,61 @@ export default function Landing() {
 					A digital solution to vehicle pollution
 				</h1>
 
-				<h3 className="font-semibold mb-6">Key Features</h3>
-				<div className="grid grid-cols-2 gap-4 mb-6">
-					{[
-						{ icon: <Car size={44} />, text: "Detect vehicle number" },
-						{ icon: <Camera size={24} />, text: "Validate PUC certificate" },
-						{ icon: <AlertTriangle size={24} />, text: "Monitor pollution" },
-						{ icon: <Wifi size={24} />, text: "Alert system" },
-					].map((feature, index) => (
-						<div
-							key={index}
-							className="flex items-center p-6 rounded border-4 border-gray_100"
-						>
-							{feature.icon}
-							<span className="ml-2 text-md text-pretty">{feature.text}</span>
-						</div>
-					))}
+				<h3 className="font-regular text-center mb-6">What we do?</h3>
+				<div className="grid grid-cols-2 gap-2 mb-6">
+					<Tile
+						icon={<Car size={20} />}
+						title="Detection"
+						subtitle="Detect vehicle number"
+					/>
+					<Tile
+						icon={<FileCheck size={20} />}
+						title="Validation"
+						subtitle="PUC Certificates"
+					/>
+					<Tile
+						icon={<Activity size={20} />}
+						title="Monitoring"
+						subtitle="Pollution monitor"
+					/>
+					<Tile
+						icon={<Bell size={20} />}
+						title="Alerts"
+						subtitle="Real time alerts"
+					/>
 				</div>
 
-				<h3 className="font-semibold mb-6">Who is this for?</h3>
+				<h3 className="font-regular text-center mb-6">Who do we serve?</h3>
 				<div className="grid grid-cols-2 gap-4 mb-6">
-					<div className="flex p-6 border-4 text-right text-pretty border-gray_100 rounded">
-						<Image
-							src={individuals}
-							width={24}
-							height={24}
-							alt="individuals-icon"
-						></Image>
-						<p className="font-regular ml-3">Individuals</p>
-					</div>
-					<div className="flex p-6 border-4 text-right text-pretty border-gray_100 rounded">
-						<Image
-							src={authorities}
-							width={24}
-							height={24}
-							alt="authorities-icon"
-						></Image>
-						<p className="font-regular ml-3">Authorities</p>
-					</div>
+					<Tile
+						icon={
+							<Image
+								src={individuals}
+								width={20}
+								height={20}
+								alt="individuals-icon"
+							/>
+						}
+						title="Individuals"
+						subtitle="People can avail PUC
+certificates."
+					/>
+					<Tile
+						icon={
+							<Image
+								src={authorities}
+								width={20}
+								height={20}
+								alt="authorities-icon"
+							/>
+						}
+						title="Authorities"
+						subtitle="Authorities can validate certificates."
+					/>
 				</div>
 
-				<h3 className="font-semibold mb-6">About the project</h3>
-				<p className="text-sm text-gray_600 mb-6">
+				<h3 className="font-regular text-center mb-6">About the project</h3>
+				<p className="text-sm text-gray_600 mb-6 bg-white p-6 rounded-[1.25rem]">
 					The PUC Project is an initiative to reduce air pollution by ensuring
 					that vehicles are regularly checked for emissions and have valid
 					Pollution Under Control (PUC) certificates.

@@ -5,6 +5,8 @@ exports.handler = async function (event, context) {
 	const rtoOfficeName = event.queryStringParameters
 		? event.queryStringParameters.office_name
 		: null;
+
+	//* Even if the user does not provide office name then also connect
 	if (!rtoOfficeName) {
 		return {
 			statusCode: 200,
