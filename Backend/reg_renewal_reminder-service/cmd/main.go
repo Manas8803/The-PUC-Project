@@ -34,7 +34,7 @@ func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 
 	if !vehicle_exists {
 		log.Printf("Vehicle with reg_no = %v does not exists in DB: ", data.RegNo)
-		err := lmd.InvokeVRCHandler(*vehicle)
+		err := lmd.InvokeVRCHandler(data.RegNo)
 		if err != nil {
 			log.Println("Error in invoking VRC Handler: ", err)
 			return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: http.StatusInternalServerError}, nil

@@ -78,7 +78,6 @@ func (v *Vehicle) FromJson(data []byte) error {
 
 	regUptoStr, ok := result["reg_upto"].(string)
 	if ok {
-
 		reg_upto, err := parseDate(regUptoStr)
 		if err != nil {
 			log.Println("error parsing date: ", err)
@@ -88,12 +87,26 @@ func (v *Vehicle) FromJson(data []byte) error {
 	}
 
 	v.VehicleType = result["vehicle_type"].(string)
-	mobile_no, err := strconv.ParseFloat(fmt.Sprint(result["mobile_no"]), 64)
-	if err != nil {
-		log.Println("error parsing mobile no. : ", err)
-		return err
+
+	// Check if mobile_no is nil before parsing
+	mobileNo, ok := result["mobile_no"]
+	if !ok {
+		log.Println("mobile_no field is missing")
+		v.Mobile = 0 // Set a default value or handle it as needed
+	} else {
+		mobileNoStr := fmt.Sprint(mobileNo)
+		if mobileNoStr == "<nil>" {
+			log.Println("mobile_no is nil")
+			v.Mobile = 0 // Set a default value or handle it as needed
+		} else {
+			mobile_no, err := strconv.ParseFloat(mobileNoStr, 64)
+			if err != nil {
+				log.Println("error parsing mobile no. : ", err)
+				return err
+			}
+			v.Mobile = int64(mobile_no)
+		}
 	}
-	v.Mobile = int64(mobile_no)
 
 	pucUptoStr, ok := result["vehicle_pucc_details"].(map[string]interface{})["pucc_upto"].(string)
 	if ok {
@@ -104,9 +117,10 @@ func (v *Vehicle) FromJson(data []byte) error {
 		}
 		v.PucUpto = puc_upto
 	}
-	today := time.Now()
 
+	today := time.Now()
 	v.LastCheckDate = &Date{Day: today.Day(), Month: int(today.Month()), Year: today.Year()}
+
 	return nil
 }
 
@@ -139,8 +153,8 @@ func SaveOrUpdateVehicle(vehicle Vehicle) error {
 	}
 
 	err = db.SaveOrUpdateVehicle(vehicle_dyn)
-	log.Println("error in saving data in table : ", err)
 	if err != nil {
+		log.Println("error in saving data in table : ", err)
 		return err
 	}
 	return nil

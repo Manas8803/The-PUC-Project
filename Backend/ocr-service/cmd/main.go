@@ -15,6 +15,7 @@ import (
 
 func Handler(cont context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
+	log.Println("Request Body", req.Body)
 	//* Extracting JSON
 	var img image.Image
 	err := img.FromJson(&req)

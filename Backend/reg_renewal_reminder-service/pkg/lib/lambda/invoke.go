@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/Manas8803/The-PUC-Project__BackEnd/reg_renewal_reminder-service/pkg/models/service"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/lambda"
@@ -16,12 +15,12 @@ type Payload struct {
 }
 
 type Data struct {
-	VehicleRegistrationNumber string `json:"vehicle_registration_number"`
+	VehicleRegistrationNumber string `json:"vehicleRegistrationNumber"`
 }
 
-func InvokeVRCHandler(v service.Vehicle) error {
+func InvokeVRCHandler(regNo string) error {
 
-	vehicle, err := json.Marshal(Data{VehicleRegistrationNumber: v.RegNo})
+	vehicle, err := json.Marshal(Data{VehicleRegistrationNumber: regNo})
 	if err != nil {
 		log.Println("error in marshalling data vehicle registration number : ", err)
 		return err
