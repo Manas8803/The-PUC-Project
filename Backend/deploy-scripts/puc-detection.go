@@ -183,7 +183,7 @@ func NewPucDetectionStack(scope constructs.Construct, id string, props *PucDetec
 		Handler: jsii.String("main"),
 		Timeout: awscdk.Duration_Seconds(jsii.Number(10)),
 		Environment: &map[string]*string{
-			"JWT_SECRET_KEY": jsii.String(os.Getenv("JWT_SECRET_KEY")),
+			"JWT_SECRET": jsii.String(os.Getenv("JWT_SECRET")),
 			"JWT_LIFETIME":   jsii.String(os.Getenv("JWT_LIFETIME")),
 			"EMAIL":          jsii.String(os.Getenv("EMAIL")),
 			"PASSWORD":       jsii.String(os.Getenv("PASSWORD")),
