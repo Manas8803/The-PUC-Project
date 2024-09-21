@@ -43,7 +43,7 @@ func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 }
 
 func main() {
-	err := godotenv.Load("../.env")
+	err := godotenv.Load("./.env")
 	if err != nil {
 		log.Println("NOT ABLE TO FIND .env FILE..\nContinuing...")
 	}

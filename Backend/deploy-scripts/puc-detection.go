@@ -71,6 +71,7 @@ func NewPucDetectionStack(scope constructs.Construct, id string, props *PucDetec
 		Environment: &map[string]*string{
 			"REGION":               jsii.String(os.Getenv("CDK_DEFAULT_REGION")),
 			"API_KEY":              jsii.String(os.Getenv("API_KEY")),
+			"API_HOST":             jsii.String(os.Getenv("API_HOST")),
 			"VEHICLE_TABLE_ARN":    jsii.String(*vehicle_table.TableArn()),
 			"REPORT_WEBSOCKET_URL": jsii.String(os.Getenv("REPORT_WEBSOCKET_URL")),
 		},
@@ -183,7 +184,7 @@ func NewPucDetectionStack(scope constructs.Construct, id string, props *PucDetec
 		Handler: jsii.String("main"),
 		Timeout: awscdk.Duration_Seconds(jsii.Number(10)),
 		Environment: &map[string]*string{
-			"JWT_SECRET": jsii.String(os.Getenv("JWT_SECRET")),
+			"JWT_SECRET":     jsii.String(os.Getenv("JWT_SECRET")),
 			"JWT_LIFETIME":   jsii.String(os.Getenv("JWT_LIFETIME")),
 			"EMAIL":          jsii.String(os.Getenv("EMAIL")),
 			"PASSWORD":       jsii.String(os.Getenv("PASSWORD")),
