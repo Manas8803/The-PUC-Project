@@ -7,8 +7,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/Manas8803/The-PUC-Project__BackEnd/vrc-service/pkg/models/db"
 )
 
 type Date struct {
@@ -20,22 +18,22 @@ type Date struct {
 func parseDate(dateStr string) (*Date, error) {
 	parts := strings.Split(dateStr, "-")
 	if len(parts) != 3 {
-		return &Date{}, fmt.Errorf("invalid date format: %s", dateStr)
+		return nil, fmt.Errorf("invalid date format: %s", dateStr)
 	}
 
-	day, err := strconv.Atoi(parts[0])
+	year, err := strconv.Atoi(parts[0])
 	if err != nil {
-		return &Date{}, err
+		return nil, err
 	}
 
 	month, err := strconv.Atoi(parts[1])
 	if err != nil {
-		return &Date{}, err
+		return nil, err
 	}
 
-	year, err := strconv.Atoi(parts[2])
+	day, err := strconv.Atoi(parts[2])
 	if err != nil {
-		return &Date{}, err
+		return nil, err
 	}
 
 	return &Date{
@@ -60,102 +58,57 @@ type Vehicle struct {
 }
 
 func (v *Vehicle) FromJson(data []byte) error {
-	var resp map[string]interface{}
+	var resp struct {
+		Result struct {
+			OwnerName        string `json:"owner_name"`
+			OfficeName       string `json:"office_name"`
+			RegNo            string `json:"reg_no"`
+			VehicleClassDesc string `json:"vehicle_class_desc"`
+			Model            string `json:"model"`
+			RegUpto          string `json:"reg_upto"`
+			VehicleType      string `json:"vehicle_type"`
+			VehiclePuccDetails struct {
+				PuccUpto string `json:"pucc_upto"`
+			} `json:"vehicle_pucc_details"`
+		} `json:"result"`
+	}
+
 	if err := json.Unmarshal(data, &resp); err != nil {
 		return err
 	}
 
-	result, ok := resp["result"].(map[string]interface{})
-	if !ok {
-		return fmt.Errorf("invalid response format")
-	}
+	v.OwnerName = resp.Result.OwnerName
+	v.OfficeName = resp.Result.OfficeName
+	v.RegNo = resp.Result.RegNo
+	v.VehicleClassDesc = resp.Result.VehicleClassDesc
+	v.Model = resp.Result.Model
+	v.VehicleType = resp.Result.VehicleType
 
-	v.OwnerName = result["owner_name"].(string)
-	v.OfficeName = result["office_name"].(string)
-	v.RegNo = result["reg_no"].(string)
-	v.VehicleClassDesc = result["vehicle_class_desc"].(string)
-	v.Model = result["model"].(string)
-
-	regUptoStr, ok := result["reg_upto"].(string)
-	if ok {
-		reg_upto, err := parseDate(regUptoStr)
-		if err != nil {
-			log.Println("error parsing date: ", err)
-			return err
-		}
-		v.RegUpto = reg_upto
-	}
-
-	v.VehicleType = result["vehicle_type"].(string)
-
-	// Check if mobile_no is nil before parsing
-	mobileNo, ok := result["mobile_no"]
-	if !ok {
-		log.Println("mobile_no field is missing")
-		v.Mobile = 0 // Set a default value or handle it as needed
-	} else {
-		mobileNoStr := fmt.Sprint(mobileNo)
-		if mobileNoStr == "<nil>" {
-			log.Println("mobile_no is nil")
-			v.Mobile = 0 // Set a default value or handle it as needed
-		} else {
-			mobile_no, err := strconv.ParseFloat(mobileNoStr, 64)
-			if err != nil {
-				log.Println("error parsing mobile no. : ", err)
-				return err
-			}
-			v.Mobile = int64(mobile_no)
-		}
-	}
-
-	pucUptoStr, ok := result["vehicle_pucc_details"].(map[string]interface{})["pucc_upto"].(string)
-	if ok {
-		puc_upto, err := parseDate(pucUptoStr)
-		if err != nil {
-			log.Println("error parsing date : ", err)
-			return err
-		}
-		v.PucUpto = puc_upto
-	}
-
-	today := time.Now()
-	v.LastCheckDate = &Date{Day: today.Day(), Month: int(today.Month()), Year: today.Year()}
-
-	return nil
-}
-
-func convertVehicleToVehicleDyn(vehicle Vehicle) (db.Vehicle, error) {
-
-	puc_upto := fmt.Sprint(vehicle.PucUpto.Day + vehicle.PucUpto.Month + vehicle.PucUpto.Year)
-	reg_upto := fmt.Sprint(vehicle.RegUpto.Day + vehicle.RegUpto.Month + vehicle.RegUpto.Year)
-	last_check_date := fmt.Sprint(vehicle.LastCheckDate.Day + vehicle.LastCheckDate.Month + vehicle.LastCheckDate.Year)
-	mobile := fmt.Sprint(vehicle.Mobile)
-
-	return db.Vehicle{
-		OwnerName:        vehicle.OwnerName,
-		OfficeName:       vehicle.OfficeName,
-		RegNo:            vehicle.OwnerName,
-		VehicleClassDesc: vehicle.VehicleClassDesc,
-		Model:            vehicle.Model,
-		VehicleType:      vehicle.VehicleType,
-		RegUpto:          reg_upto,
-		PucUpto:          puc_upto,
-		Mobile:           mobile,
-		LastCheckDate:    last_check_date,
-	}, nil
-}
-
-func SaveOrUpdateVehicle(vehicle Vehicle) error {
-	vehicle_dyn, err := convertVehicleToVehicleDyn(vehicle)
+	regUpto, err := parseDate(resp.Result.RegUpto)
 	if err != nil {
-		log.Println("error converting service vehicle to db vehicle: ", err)
-		return err
+		return fmt.Errorf("error parsing reg_upto: %v", err)
+	}
+	v.RegUpto = regUpto
+
+	pucUpto, err := parseDate(resp.Result.VehiclePuccDetails.PuccUpto)
+	if err != nil {
+		return fmt.Errorf("error parsing puc_upto: %v", err)
+	}
+	v.PucUpto = pucUpto
+
+	// Set PucStatus based on whether PucUpto is in the future
+	now := time.Now()
+	v.PucStatus = time.Date(v.PucUpto.Year, time.Month(v.PucUpto.Month), v.PucUpto.Day, 0, 0, 0, 0, time.UTC).After(now)
+
+	// Set LastCheckDate to current date
+	v.LastCheckDate = &Date{
+		Year:  now.Year(),
+		Month: int(now.Month()),
+		Day:   now.Day(),
 	}
 
-	err = db.SaveOrUpdateVehicle(vehicle_dyn)
-	if err != nil {
-		log.Println("error in saving data in table : ", err)
-		return err
-	}
+	// Mobile number is not present in the provided JSON. If it's needed, you may have to get it from another source.
+	v.Mobile = 0 // Set to default value or handle as needed
+
 	return nil
 }
