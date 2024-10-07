@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/Manas8803/The-PUC-Project__BackEnd/vrc-service/pkg/models/db"
 )
 
 type Date struct {
@@ -110,5 +112,41 @@ func (v *Vehicle) FromJson(data []byte) error {
 	// Mobile number is not present in the provided JSON. If it's needed, you may have to get it from another source.
 	v.Mobile = 0 // Set to default value or handle as needed
 
+	return nil
+}
+
+func convertVehicleToVehicleDyn(vehicle Vehicle) (db.Vehicle, error) {
+
+	puc_upto := fmt.Sprint(vehicle.PucUpto.Day + vehicle.PucUpto.Month + vehicle.PucUpto.Year)
+	reg_upto := fmt.Sprint(vehicle.RegUpto.Day + vehicle.RegUpto.Month + vehicle.RegUpto.Year)
+	last_check_date := fmt.Sprint(vehicle.LastCheckDate.Day + vehicle.LastCheckDate.Month + vehicle.LastCheckDate.Year)
+	mobile := fmt.Sprint(vehicle.Mobile)
+
+	return db.Vehicle{
+		OwnerName:        vehicle.OwnerName,
+		OfficeName:       vehicle.OfficeName,
+		RegNo:            vehicle.OwnerName,
+		VehicleClassDesc: vehicle.VehicleClassDesc,
+		Model:            vehicle.Model,
+		VehicleType:      vehicle.VehicleType,
+		RegUpto:          reg_upto,
+		PucUpto:          puc_upto,
+		Mobile:           mobile,
+		LastCheckDate:    last_check_date,
+	}, nil
+}
+
+func SaveOrUpdateVehicle(vehicle Vehicle) error {
+	vehicle_dyn, err := convertVehicleToVehicleDyn(vehicle)
+	if err != nil {
+		log.Println("error converting service vehicle to db vehicle: ", err)
+		return err
+	}
+
+	err = db.SaveOrUpdateVehicle(vehicle_dyn)
+	if err != nil {
+		log.Println("error in saving data in table : ", err)
+		return err
+	}
 	return nil
 }
